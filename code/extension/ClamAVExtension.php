@@ -36,7 +36,8 @@ class ClamAVExtension extends \DataExtension {
 	
 		// Support VersionedFiles module
 		// ie. If file has been replaced, scan it.
-		$changedFields = $this->owner->getChangedFields(true, DataObject::CHANGE_VALUE);
+		$changeValue = defined('DataObject::CHANGE_VALUE') ? DataObject::CHANGE_VALUE : 1;
+		$changedFields = $this->owner->getChangedFields(true, $changeValue);
 		$currentVersionIDChanged = (isset($changedFields['CurrentVersionID'])) ? $changedFields['CurrentVersionID'] : array();
 		if ($currentVersionIDChanged && $currentVersionIDChanged['before'] != $currentVersionIDChanged['after']) {
 			$doVirusScan = true;
